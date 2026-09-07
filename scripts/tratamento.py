@@ -27,7 +27,7 @@ def tratar_bases():
             encoding="latin1"
         )
 
-        # Guarda o ano do arquivo
+        # Ano do arquivo
         df["ano_arquivo"] = arquivo.stem
 
         # Remove duplicados
@@ -52,6 +52,12 @@ def tratar_bases():
         for coluna in ["preco_unitario", "preco_total"]:
 
             if coluna in df.columns:
+
+                df[coluna] = (
+                    df[coluna]
+                    .astype(str)
+                    .str.replace(",", ".", regex=False)
+                )
 
                 df[coluna] = pd.to_numeric(
                     df[coluna],

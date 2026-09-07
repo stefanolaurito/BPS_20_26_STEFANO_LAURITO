@@ -48,10 +48,9 @@ def gerar_bases_dashboard():
 
         "qtd_itens_comprados",
 
-        "preco_unitario",
+        "preco_unitario"
 
-        "preco_total"
-
+        
     ]
 
     df_dashboard = df[colunas_dashboard].copy()
