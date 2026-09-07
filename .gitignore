@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# VS Code
+.vscode/
+
+# Dados
+base_dados/
+dados_tratados/
+relatorios/
+
+# Sistema
+.DS_Store
+Thumbs.db
