@@ -104,7 +104,9 @@ def executar_tratamento():
         )
 
     # 4. Normalização de texto (caixa alta e remoção de espaços soltos)
-    cols_texto = df_final.select_dtypes(include=["object"]).columns
+    cols_texto = df_final.select_dtypes(
+    include=["object", "string", "category"]
+).columns
     for col in cols_texto:
         df_final[col] = df_final[col].astype(str).str.strip().str.upper()
 

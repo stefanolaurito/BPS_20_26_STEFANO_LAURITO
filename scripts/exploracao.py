@@ -89,6 +89,33 @@ def explorar_bases_bps():
             "Todas as bases possuem nomes de colunas idênticos (após normalização de texto)."
         )
 
+    # --- NOVO BLOCO: ANÁLISE DA BASE FINAL TRATADA ---
+    caminho_base_tratada = Path("dados_tratados") / "BPS_20_26_StefanoLaurito.csv"
+    if caminho_base_tratada.exists():
+        print("\n" + "=" * 60)
+        print("DIAGNOSTICO DA BASE FINAL CONSOLIDADA E TRATADA")
+        print("=" * 60)
+        
+        df_tratado = pd.read_csv(caminho_base_tratada, sep=";", low_memory=False)
+        
+        print(f"Total de registros sanitizados: {len(df_tratado):,}")
+        print(f"Colunas presentes ({len(df_tratado.columns)}): {list(df_tratado.columns)}\n")
+        
+        print("--- Valores Nulos por Coluna ---")
+        nulos = df_tratado.isnull().sum()
+        print(nulos[nulos > 0] if nulos.sum() > 0 else "Nenhum valor nulo encontrado.")
+        
+        print("\n--- Estatísticas das Métricas Numéricas ---")
+        cols_num = [c for c in ["preco_total", "qtd_itens_comprados", "preco_unitario"] if c in df_tratado.columns]
+        if cols_num:
+            print(df_tratado[cols_num].describe().apply(lambda x: x.map("{:,.2f}".format)))
+            
+        print("\n--- Top 5 Categorias das Principais Colunas ---")
+        cols_cat = [c for c in ["ano_compra", "uf", "modalidade_compra"] if c in df_tratado.columns]
+        for col in cols_cat:
+            print(f"\n[Coluna: {col}]")
+            print(df_tratado[col].value_counts().head(5))
+
     print("\nExploração concluída com sucesso!")
 
 
