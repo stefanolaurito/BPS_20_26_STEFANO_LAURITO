@@ -49,7 +49,6 @@ def gerar_bases_dashboard():
         "qtd_itens_comprados",
 
         "preco_unitario"
-
         
     ]
 

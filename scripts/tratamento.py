@@ -1,98 +1,53 @@
-from pathlib import Path
+import os
 import pandas as pd
 
+# Diretórios
+PASTA_ENTRADA = 'base_dados'
+PASTA_SAIDA = 'dados_tratados'
+ARQUIVO_FINAL = os.path.join(PASTA_SAIDA, 'BPS_20_26_StefanoLaurito.csv')
 
-def tratar_bases():
+# Garantir que a pasta de saída existe
+os.makedirs(PASTA_SAIDA, exist_ok=True)
 
-    print("=" * 50)
-    print("TRATAMENTO DAS BASES")
-    print("=" * 50)
+dfs = []
 
-    pasta_dados = Path("base_dados")
-    pasta_saida = Path("dados_tratados")
+print("Iniciando o processamento dos arquivos...")
 
-    pasta_saida.mkdir(exist_ok=True)
+for arquivo in os.listdir(PASTA_ENTRADA):
+    if arquivo.endswith('.csv'):
+        caminho_completo = os.path.join(PASTA_ENTRADA, arquivo)
+        print(f"Lendo: {arquivo}")
+        
+        # Tenta ler com UTF-8, se falhar tenta Latin-1 (comum em dados públicos br)
+        try:
+            df = pd.read_csv(caminho_completo, sep=';', encoding='utf-8', low_memory=False)
+        except UnicodeDecodeError:
+            df = pd.read_csv(caminho_completo, sep=';', encoding='latin-1', low_memory=False)
+        
+        # Padronizar nomes de colunas para minúsculas
+        df.columns = df.columns.str.strip().str.lower()
+        
+        dfs.append(df)
 
-    arquivos = sorted(pasta_dados.glob("*.csv"))
+# Concatenação de todas as bases anuais
+df_consolidado = pd.concat(dfs, ignore_index=True)
+print("Bases concatenadas com sucesso!")
 
-    bases = []
+# Exemplo de seleção de colunas essenciais para reduzir o tamanho do arquivo
+# (Ajuste o nome exato das colunas conforme o dicionário de dados do BPS)
+colunas_essenciais = [
+    'ano', 'uf', 'municipio', 'instituicao', 
+    'fornecedor', 'fabricante', 'produto', 
+    'modalidade_compra', 'quantidade', 'preco_unitario', 'preco_total'
+]
 
-    for arquivo in arquivos:
+# Mantém apenas as colunas existentes na base
+colunas_presentes = [col for col in colunas_essenciais if col in df_consolidado.columns]
+df_filtrado = df_consolidado[colunas_presentes].copy()
 
-        print(f"Lendo {arquivo.name}...")
+# Tratamento de nulos e duplicados
+df_filtrado.drop_duplicates(inplace=True)
 
-        df = pd.read_csv(
-            arquivo,
-            sep=";",
-            encoding="latin1"
-        )
-
-        # Ano do arquivo
-        df["ano_arquivo"] = arquivo.stem
-
-        # Remove duplicados
-        df = df.drop_duplicates()
-
-        # Datas
-        if "compra" in df.columns:
-            df["compra"] = pd.to_datetime(
-                df["compra"],
-                dayfirst=True,
-                errors="coerce"
-            )
-
-        if "insercao" in df.columns:
-            df["insercao"] = pd.to_datetime(
-                df["insercao"],
-                dayfirst=True,
-                errors="coerce"
-            )
-
-        # Valores monetários
-        for coluna in ["preco_unitario", "preco_total"]:
-
-            if coluna in df.columns:
-
-                df[coluna] = (
-                    df[coluna]
-                    .astype(str)
-                    .str.replace(",", ".", regex=False)
-                )
-
-                df[coluna] = pd.to_numeric(
-                    df[coluna],
-                    errors="coerce"
-                )
-
-        # Quantidade
-        if "qtd_itens_comprados" in df.columns:
-
-            df["qtd_itens_comprados"] = pd.to_numeric(
-                df["qtd_itens_comprados"],
-                errors="coerce"
-            )
-
-        bases.append(df)
-
-    # Consolida todas as bases
-    df_final = pd.concat(
-        bases,
-        ignore_index=True
-    )
-
-    print("\nBase consolidada criada!\n")
-    print(df_final.info())
-
-    caminho = pasta_saida / "BPS_2020_2026.csv"
-
-    df_final.to_csv(
-        caminho,
-        sep=";",
-        encoding="utf-8-sig",
-        index=False
-    )
-
-    print("\nArquivo exportado:")
-    print(caminho)
-
-    return df_final
+# Salvar arquivo tratado final
+df_filtrado.to_csv(ARQUIVO_FINAL, index=False, sep=',', encoding='utf-8')
+print(f"Processo concluído! Arquivo salvo em: {ARQUIVO_FINAL}")
