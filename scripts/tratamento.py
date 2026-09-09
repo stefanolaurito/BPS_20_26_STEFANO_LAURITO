@@ -1,6 +1,66 @@
+import html
 from pathlib import Path
+import re
 import numpy as np
 import pandas as pd
+
+try:
+    import ftfy
+
+    HAS_FTFY = True
+except ImportError:
+    HAS_FTFY = False
+
+
+def limpar_e_sanitizar_texto(texto: str) -> str:
+    """Decodifica entidades HTML, remove tags HTML/Angular, corrige mojibake/encoding
+
+    e normaliza o texto em caixa alta sem espaços duplicados.
+    """
+    if not isinstance(texto, str) or texto in ("NAN", "NONE", "", "NAN/NAN"):
+        return texto
+
+    # 1. Decodifica entidades HTML (ex: &#193; -> Á, &#205; -> Í, &amp; -> &)
+    texto = html.unescape(texto)
+
+    # 2. Remove tags HTML e marcas Angular (ex: <LABEL>, <P CLASS="...">, </SPAN>)
+    texto = re.sub(r"<[^>]+>", " ", texto)
+
+    # 3. Remove quebras de linha e códigos de tabulação residuais
+    texto = re.sub(r"&#10;|[\r\n\t]+", " ", texto)
+
+    # 4. Trata mojibake / encoding corrompido com ftfy se disponível
+    if HAS_FTFY:
+        texto = ftfy.fix_text(texto)
+
+    # 5. Mapeamento manual para resíduos de enconding específicos do BPS
+    substituicoes = {
+        r"Ã\u0083": "Ã",
+        r"Ã\u0081": "Á",
+        r"Ã\u0089": "É",
+        r"Ã\u008d": "Í",
+        r"Ã\u0093": "Ó",
+        r"Ã\u009a": "Ú",
+        r"Ã\u0087": "Ç",
+        r"Ã\u0080": "À",
+        r"Ã\u0095": "Õ",
+        r"Ã\u0082": "Â",
+        r"Ã\u008a": "Ê",
+        r"Ã\u0094": "Ô",
+        r"Ã\b": "Á",
+        r"Ã□": "Á",
+        r"Ã\x81": "Á",
+        r"Ã\x83": "Ã",
+        r"Ã\x87": "Ç",
+    }
+
+    for padrao, substituto in substituicoes.items():
+        texto = re.sub(padrao, substituto, texto)
+
+    # 6. Normaliza espaços duplos/múltiplos e converte para caixa alta
+    texto = re.sub(r"\s+", " ", texto).strip()
+
+    return texto.upper()
 
 
 def executar_tratamento():
@@ -103,12 +163,14 @@ def executar_tratamento():
             df_final["qtd_itens_comprados"] * df_final["preco_unitario"]
         )
 
-    # 4. Normalização de texto (caixa alta e remoção de espaços soltos)
+    # 4. Limpeza de HTML, Entidades e Sanitização dos Campos de Texto
+    print("Limpando tags HTML, decodificando entidades e sanitizando colunas de texto...")
     cols_texto = df_final.select_dtypes(
-    include=["object", "string", "category"]
-).columns
+        include=["object", "string", "category"]
+    ).columns
+
     for col in cols_texto:
-        df_final[col] = df_final[col].astype(str).str.strip().str.upper()
+        df_final[col] = df_final[col].astype(str).apply(limpar_e_sanitizar_texto)
 
     print(f"Total de registros sanitizados: {len(df_final):,}")
 

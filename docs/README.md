@@ -45,9 +45,10 @@ O Banco de Preços em Saúde (BPS) disponibiliza dados fragmentados em bases anu
 * **Preço Médio Ponderado:** `SUM(preco_total) / SUM(qtd_itens_comprados)` — Custo real médio por unidade, evitando viés por lote.
 * **Total de Processos:** `COUNT(codigo_br)` — Quantidade total de registros licitatórios.
 * **Instituições Compradoras:** `COUNT_DISTINCT(nome_instituicao)` — Total de órgãos públicos compradores mapeados.
+* **Fornecedores Mapeados:** `COUNT_DISTINCT(nome_fornecedor)` — Total de empresas fornecedoras e distribuidoras mapeadas na base.
 
 ## 8. Link ou Imagens do Dashboard
-* **Dashboard Interativo (Looker Studio):** https://github.com/stefanolaurito/BPS_20_26_STEFANO_LAURITO
+* **Dashboard Interativo (Looker Studio):** https://datastudio.google.com/reporting/99e60032-0f08-4e22-89f5-01e6cfcd9454
 
 ## 9. Principais Análises e Descobertas
 * **Concentração Regional:** Estados como Paraná (PR) e São Paulo (SP) concentram os maiores volumes absolutos de investimento público no período.
