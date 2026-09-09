@@ -23,7 +23,8 @@ O Banco de Preços em Saúde (BPS) disponibiliza dados fragmentados em bases anu
 4. Normalização dos nomes das colunas e concatenação tabular do período 2020-2026.
 
 ## 5. Tratamentos e Transformações Realizados
-* **Sanitização de Enconding:** Mapeamento e correção de caracteres especiais nas modalidades de compra via campos calculados (`CASE WHEN`).
+* **Sanitização de HTML e Entidades:** Aplicação das bibliotecas `html` e `re` (Regex) para remover tags HTML/Angular (`<LABEL>`, `<SPAN>`, `<P>`), eliminar códigos de formatação residuais (`&#10;`) e decodificar entidades HTML para acentuação nativa (ex: `&#193;` para Á).
+* **Sanitização de Encoding:** Mapeamento e correção de caracteres especiais (*mojibake*) nas modalidades de compra e descrições do catálogo CATMAT via script Python.
 * **Tratamento de Nulos:** Validação de ausência de nulos em métricas numéricas e tratamento residual em colunas institucionais.
 * **Remoção de Duplicidades:** Deduplicação de registros idênticos entre as bases anuais.
 * **Métricas Ponderadas:** Criação de fórmulas para mitigar a distorção causada por lotes com volumes discrepantes (outliers de até 22,8 bilhões no valor total).
