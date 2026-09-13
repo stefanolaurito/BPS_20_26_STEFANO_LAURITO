@@ -81,7 +81,8 @@ Carfilzomib 60 mg: R$ 1,38 bi.
 * Base de 2026 parcial em relação aos anos anteriores.
 
 ## 12. Instruções para Reprodução do Projeto
-1. Clone o repositório: https://github.com/stefanolaurito/BPS_20_26_STEFANO_LAURITO.git    cd BPS_20_26_STEFANO_LAURITO   ```
+1. Clone o repositório: https://github.com/stefanolaurito/BPS_20_26_STEFANO_LAURITO.git    
+cd BPS_20_26_STEFANO_LAURITO
 2. Instale as dependências exigidas (`pandas`, `pandas-gbq`, `google-cloud-bigquery`).
 3. Adicione os arquivos brutos (`2020.csv` a `2026.csv`) no diretório `base_dados/`.
 4. Execute os scripts `scripts/exploracao.py` e `scripts/carga_bigquery.py` para realizar a sanitização e a carga no BigQuery.
