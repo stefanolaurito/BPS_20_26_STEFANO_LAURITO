@@ -51,9 +51,9 @@ O Banco de Preços em Saúde (BPS) disponibiliza dados fragmentados em bases anu
 ## 8. Link ou Imagens do Dashboard
 * **Dashboard Interativo (Looker Studio):** https://datastudio.google.com/reporting/99e60032-0f08-4e22-89f5-01e6cfcd9454
 
-![Dashboard Looker Studio](documentos/print_dashboard_01.png)
-![Dashboard Looker Studio](documentos/print_dashboard_02.png)
-![Dashboard Looker Studio](documentos/print_dashboard_03.png)
+![Dashboard Looker Studio 1](print_dashboard_01.png)
+![Dashboard Looker Studio 2](print_dashboard_02.png)
+![Dashboard Looker Studio 3](print_dashboard_03.png)
 
 ## 9. Principais Análises e Descobertas
 * **Concentração Regional:** Estados como Paraná (PR) e São Paulo (SP) concentram os maiores volumes absolutos de investimento público no período.
@@ -80,8 +80,7 @@ Carfilzomib 60 mg: R$ 1,38 bi.
 
 ## 12. Instruções para Reprodução do Projeto
 1. Clone o repositório: https://github.com/stefanolaurito/BPS_20_26_STEFANO_LAURITO.git
-   cd BPS_20_26_STEFANO_LAURITO
-   ```
+   cd BPS_20_26_STEFANO_LAURITO   ```
 2. Instale as dependências exigidas (`pandas`, `pandas-gbq`, `google-cloud-bigquery`).
 3. Adicione os arquivos brutos (`2020.csv` a `2026.csv`) no diretório `base_dados/`.
 4. Execute os scripts `scripts/exploracao.py` e `scripts/carga_bigquery.py` para realizar a sanitização e a carga no BigQuery.
