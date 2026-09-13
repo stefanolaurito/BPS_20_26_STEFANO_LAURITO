@@ -51,11 +51,9 @@ O Banco de Preços em Saúde (BPS) disponibiliza dados fragmentados em bases anu
 ## 8. Link ou Imagens do Dashboard
 * **Dashboard Interativo (Looker Studio):** https://datastudio.google.com/reporting/99e60032-0f08-4e22-89f5-01e6cfcd9454
 
-![Dashboard Looker Studio](print_dashboard_01.png)
-
-![Dashboard Looker Studio](print_dashboard_02.png)
-
-![Dashboard Looker Studio](print_dashboard_03.png)
+![Dashboard Looker Studio](documentos/print_dashboard_01.png)
+![Dashboard Looker Studio](documentos/print_dashboard_02.png)
+![Dashboard Looker Studio](documentos/print_dashboard_03.png)
 
 ## 9. Principais Análises e Descobertas
 * **Concentração Regional:** Estados como Paraná (PR) e São Paulo (SP) concentram os maiores volumes absolutos de investimento público no período.
