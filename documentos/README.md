@@ -53,10 +53,6 @@ O Banco de Preços em Saúde (BPS) disponibiliza dados fragmentados em bases anu
 
 ![Dashboard Looker Studio 1](print_dashboard_01.png)
 
-![Dashboard Looker Studio 2](print_dashboard_02.png)
-
-![Dashboard Looker Studio 3](print_dashboard_03.png)
-
 ## 9. Principais Análises e Descobertas
 * **Concentração Regional:** Estados como Paraná (PR) e São Paulo (SP) concentram os maiores volumes absolutos de investimento público no período.
 * **Variação Temporal:** Picos expressivos de gasto total e variação do Preço Médio Ponderado identificados nos anos de 2022 e 2025.
