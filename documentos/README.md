@@ -6,7 +6,7 @@
 # Dashboard BPS (2020-2026) - Análise de Compras Públicas de Saúde (SUS)
 
 ## 1. Objetivo do Projeto
-Desenvolver uma solução completa de Engenharia de Dados e Business Intelligence para centralizar, tratar e visualizar os dados de compras públicas de medicamentos e insumos de saúde do SUS. O projeto visa disponibilizar um dashboard executivo e analítico para tomada de decisão e monitoramento de custos públicos.
+Desenvolver uma solução completa para centralizar, tratar e visualizar os dados de compras públicas de medicamentos e insumos de saúde do SUS. O projeto visa disponibilizar um dashboard executivo e analítico para tomada de decisão e monitoramento de custos públicos.
 
 ## 2. Contextualização do Problema
 O Banco de Preços em Saúde (BPS) disponibiliza dados fragmentados em bases anuais com grande volume de registros, presença de inconsistências de codificação e discrepâncias de valores unitários/lotes. A falta de uma visão consolidada dificulta a identificação de discrepâncias de preços, a análise regional dos gastos e o acompanhamento temporal das aquisições do SUS.
@@ -51,15 +51,29 @@ O Banco de Preços em Saúde (BPS) disponibiliza dados fragmentados em bases anu
 ## 8. Link ou Imagens do Dashboard
 * **Dashboard Interativo (Looker Studio):** https://datastudio.google.com/reporting/99e60032-0f08-4e22-89f5-01e6cfcd9454
 
+![Dashboard Looker Studio](print_dashboard_01.png)
+
+![Dashboard Looker Studio](print_dashboard_02.png)
+
+![Dashboard Looker Studio](print_dashboard_03.png)
+
 ## 9. Principais Análises e Descobertas
 * **Concentração Regional:** Estados como Paraná (PR) e São Paulo (SP) concentram os maiores volumes absolutos de investimento público no período.
 * **Variação Temporal:** Picos expressivos de gasto total e variação do Preço Médio Ponderado identificados nos anos de 2022 e 2025.
 * **Predominância Licitatória:** A modalidade *Pregão* representa a esmagadora maioria das aquisições do BPS (mais de 310 mil processos).
+* **Medicamentos de Maior Custo Financeiro:**
+Penicilamina 250 mg: R$ 22,83 bi (pico atípico em compras concentradas).
+Ácido Zoledrônico 50 mcg/ml: R$ 3,73 bi.
+Tezepelumabe 110 mg/ml: R$ 1,67 bi.
+Carfilzomib 60 mg: R$ 1,38 bi.
+* **Fornecedores Principais:** Altíssima concentração nos 5 maiores distribuidores (liderados por Agille Comércio de Medicamentos com R$ 22,83 bi e SP Hospitalar com R$ 3,82 bi), refletindo a dependência do mercado público de saúde em poucos players para medicamentos de alta complexidade.
+* **2020 a 2022 (Crescimento de Volume):** Aumento constante na aquisição física (atingindo o pico de 15,08 bi de itens em 2022) impulsionado pelas demandas do período pandêmico. 2025 (Inversão Crítica de Custo/Volume): Registrou R$ 34,06 bi em investimentos para apenas 5,81 bi de itens adquiridos. O preço médio unitário disparou devido à aquisição concentrada de medicamentos biológicos e oncogênicos de alto custo unitário.
 
 ## 10. Recomendações Baseadas nos Dados
 * **Padronização de Compras:** Utilizar o Preço Médio Ponderado nacional como *benchmark* obrigatório para negociações estaduais e municipais.
 * **Auditoria de Outliers:** Investigar processos com preço unitário atípico em relação à média do catálogo CATMAT.
 * **Centralização de Lotes:** Incentivar compras consorciadas para aumentar o ganho de escala nas regiões de menor volume de aquisição.
+* **Auditoria de Preços Teto:** Criar alertas automáticos no BPS quando uma cotação ultrapassar a mediana histórica nacional em mais de 30%.
 
 ## 11. Limitações Identificadas
 * Presença de erros de enconding na base de origem que demandam tratamento na camada de exibição.
